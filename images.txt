@@ -1,5 +1,8 @@
 nginx
 amir20/dozzle
+node:22-slim
+
+
 
 
 #支持私库
