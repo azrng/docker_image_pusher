@@ -10,3 +10,8 @@ node:20-alpine
 #xhofe/alist:latest
 #支持指定架构
 #--platform=linux/arm64 xiaoyaliu/alist
+
+
+
+
+# crpi-tcpctshsgj8mzcj3.cn-shanghai.personal.cr.aliyuncs.com/azrng/nginx:[镜像版本号]
