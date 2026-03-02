@@ -1,7 +1,7 @@
 nginx
 amir20/dozzle
 node:22-slim
-
+node:20-alpine
 
 
 
