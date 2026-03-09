@@ -45,12 +45,19 @@
 # ============================================
 
 # 默认 x86 架构（自动生成）
-nginx
+
 amir20/dozzle
+
+
+# nginx
+nginx
+nginx:alpine3.20
+nginx:1.27.1
+
+
+# node
 node:22-slim
 node:20-alpine
-python:3.13-slim
-python:3.13-slim [arm64]
 
 # dotnet
 
@@ -65,3 +72,7 @@ mcr.microsoft.com/dotnet/aspnet:6.0 dotnetaspnet:6.0 [arm64]
 mcr.microsoft.com/dotnet/aspnet:10.0 dotnetaspnet:10.0 [arm64]
 mcr.microsoft.com/dotnet/sdk:6.0 dotnetsdk:6.0 [arm64]
 mcr.microsoft.com/dotnet/sdk:10.0 dotnetsdk:10.0 [arm64]
+
+# python
+python:3.13-slim
+python:3.13-slim [arm64]
