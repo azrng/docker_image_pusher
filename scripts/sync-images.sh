@@ -87,8 +87,16 @@ while IFS= read -r line || [ -n "$line" ]; do
         # 判断第二个字段是否是中括号格式 [...]，是则为 platform
         if echo "$field2" | grep -qE '^\[.*\]$'; then
             # 是 platform (如 [arm64])
-            origin_image=$(echo "$line" | awk '{print $1}')
-            platform="$field2"
+            # 验证中括号内不为空
+            arch_content=$(echo "$field2" | tr -d '[]')
+            if [ -n "$arch_content" ]; then
+                origin_image=$(echo "$line" | awk '{print $1}')
+                platform="$field2"
+            else
+                # 中括号为空，当作 new_name 处理
+                origin_image=$(echo "$line" | awk '{print $1}')
+                new_name="$field2"
+            fi
         else
             # 是 new_name
             origin_image=$(echo "$line" | awk '{print $1}')
@@ -99,6 +107,14 @@ while IFS= read -r line || [ -n "$line" ]; do
         origin_image=$(echo "$line" | awk '{print $1}')
         new_name=$(echo "$line" | awk '{print $2}')
         platform=$(echo "$line" | awk '{print $3}')
+        # 验证 platform 格式
+        if [ -n "$platform" ]; then
+            arch_content=$(echo "$platform" | tr -d '[]')
+            if [ -z "$arch_content" ]; then
+                # platform 中括号为空，清除 platform 变量
+                platform=""
+            fi
+        fi
     fi
 
     echo ""
@@ -177,7 +193,13 @@ while IFS= read -r line || [ -n "$line" ]; do
     else
         # 提取 platform 中的架构用于 docker pull
         arch_for_pull=$(echo "$platform" | tr -d '[]')
-        pull_cmd="docker pull --platform linux/$arch_for_pull $origin_image"
+        # 验证提取的架构不为空
+        if [ -z "$arch_for_pull" ]; then
+            echo "[警告] 无法解析架构参数，使用默认拉取方式"
+            pull_cmd="docker pull $origin_image"
+        else
+            pull_cmd="docker pull --platform linux/$arch_for_pull $origin_image"
+        fi
     fi
 
     echo "执行：$pull_cmd"

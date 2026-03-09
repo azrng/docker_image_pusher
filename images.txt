@@ -16,33 +16,29 @@
 # ============================================
 # 示例 1：简单名字，自动生成新名字（x86）
 # ============================================
-nginx                              # -> nginx
-amir20/dozzle                      # -> dozzle
-node:22-slim                       # -> node:22-slim
-dotnet/aspnet:6.0                  # -> aspnet:6.0
+#nginx                              # -> nginx
+#dotnet/aspnet:6.0                  # -> dotnetaspnet:6.0
 
 # ============================================
 # 示例 2：绝对地址，自动生成新名字（x86）
 # ============================================
-docker.io/library/node:20-alpine   # -> node:20-alpine
-mcr.microsoft.com/dotnet/sdk:9.0   # -> sdk:9.0
+# docker.io/library/node:20-alpine   # -> node:20-alpine
 
 # ============================================
 # 示例 3：自定义新名字（第二个字段不是 [...] 格式）
 # ============================================
-node:20-alpine my-node:20          # -> my-node:20
-dotnet/sdk:9.0 mydotnet:9.0        # -> mydotnet:9.0
+#node:20-alpine my-node:20          # -> my-node:20
 
 # ============================================
 # 示例 4：自动生成 + 架构（第二个字段是 [...] 格式）
 # ============================================
-python:3.13-slim [arm64]            # -> python:3.13-slim-arm64
-dotnet/aspnet:6.0 [arm64]          # -> aspnet:6.0-arm64
+#python:3.13-slim [arm64]            # -> python:3.13-slim-arm64
+#dotnet/aspnet:6.0 [arm64]          # -> aspnet:6.0-arm64
 
 # ============================================
 # 示例 5：自定义名字 + 架构（3 个字段）
 # ============================================
-node:20-alpine my-node:20 [arm64]  # -> my-node:20
+#node:20-alpine my-node:20 [arm64]  # -> my-node:20
 
 # ============================================
 # 实际配置
