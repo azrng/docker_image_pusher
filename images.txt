@@ -1,22 +1,31 @@
+# 格式：origin_name [platform]
+# 1 个字段：原始名字（新名字和原始名字保持一致，自动去掉/符号）
+# 2 个字段：原始名字 平台 (linux/arm64 等)
+
+# 命名规则：
+# - 自动去掉 / 符号，例如 dotnet/aspnet -> dotnetaspnet
+# - x86 架构 (linux/amd64 或无平台)：不加后缀
+# - 其他架构：添加架构后缀，例如 linux/arm64 -> -arm64
+
+# 示例：
+# nginx                        -> nginx
+# dotnet/aspnet:6.0            -> dotnetaspnet:6.0
+# python:3.13-slim linux/arm64 -> python:3.13-slim-arm64
+
+# 默认 x86 架构
 nginx
 amir20/dozzle
 node:22-slim
 node:20-alpine
 python:3.13-slim
 
+# arm64 架构
+python:3.13-slim linux/arm64
+dotnet/aspnet:6.0 linux/arm64
+dotnet/sdk:6.0 linux/arm64
+dotnet/aspnet:10.0 linux/arm64
+dotnet/sdk:10.0 linux/arm64
 
-#dotnet/aspnet:6.0
-
-#dotnet/sdk:6.0
-
-
-#支持私库
-#k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
-#xhofe/alist:latest
-#支持指定架构
-#--platform=linux/arm64 xiaoyaliu/alist
-
-
-
-
-# registry.cn-hangzhou.aliyuncs.com/zrng/nginx:[镜像版本号]
+# 带命名空间的镜像（自动去掉/）
+dotnet/aspnet:6.0
+dotnet/sdk:6.0
