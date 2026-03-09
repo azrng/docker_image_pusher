@@ -1,31 +1,67 @@
-# 格式：origin_name [platform]
-# 1 个字段：原始名字（新名字和原始名字保持一致，自动去掉/符号）
-# 2 个字段：原始名字 平台 (linux/arm64 等)
-
+# 格式：origin_name [new_name] [platform]
+#
+# 字段说明：
+# 1 个字段：原始名字（自动生成新名字）
+# 2 个字段：原始名字 + (new_name 或 platform)
+#         - 如果第二个字段是 [...] 格式，则是 platform
+#         - 否则是 new_name
+# 3 个字段：原始名字 new_name platform
+#
 # 命名规则：
-# - 自动去掉 / 符号，例如 dotnet/aspnet -> dotnetaspnet
-# - x86 架构 (linux/amd64 或无平台)：不加后缀
-# - 其他架构：添加架构后缀，例如 linux/arm64 -> -arm64
+# - 自定义 new_name：直接使用 new_name，不添加架构后缀
+# - 自动生成：取原始镜像最后一段，去掉 / 符号
+# - 架构：只有用中括号 [] 包裹的才是架构，例如 [arm64]、[amd64]
+# - 自动生成的名字会添加架构后缀 -xxx，自定义名字不添加
 
-# 示例：
-# nginx                        -> nginx
-# dotnet/aspnet:6.0            -> dotnetaspnet:6.0
-# python:3.13-slim linux/arm64 -> python:3.13-slim-arm64
+# ============================================
+# 示例 1：简单名字，自动生成新名字（x86）
+# ============================================
+nginx                              # -> nginx
+amir20/dozzle                      # -> dozzle
+node:22-slim                       # -> node:22-slim
+dotnet/aspnet:6.0                  # -> aspnet:6.0
 
-# 默认 x86 架构
+# ============================================
+# 示例 2：绝对地址，自动生成新名字（x86）
+# ============================================
+docker.io/library/node:20-alpine   # -> node:20-alpine
+mcr.microsoft.com/dotnet/sdk:9.0   # -> sdk:9.0
+
+# ============================================
+# 示例 3：自定义新名字（第二个字段不是 [...] 格式）
+# ============================================
+node:20-alpine my-node:20          # -> my-node:20
+dotnet/sdk:9.0 mydotnet:9.0        # -> mydotnet:9.0
+
+# ============================================
+# 示例 4：自动生成 + 架构（第二个字段是 [...] 格式）
+# ============================================
+python:3.13-slim [arm64]            # -> python:3.13-slim-arm64
+dotnet/aspnet:6.0 [arm64]          # -> aspnet:6.0-arm64
+
+# ============================================
+# 示例 5：自定义名字 + 架构（3 个字段）
+# ============================================
+node:20-alpine my-node:20 [arm64]  # -> my-node:20
+
+# ============================================
+# 实际配置
+# ============================================
+
+# 默认 x86 架构（自动生成）
 nginx
 amir20/dozzle
 node:22-slim
 node:20-alpine
 python:3.13-slim
 
-# arm64 架构
-python:3.13-slim linux/arm64
-dotnet/aspnet:6.0 linux/arm64
-dotnet/sdk:6.0 linux/arm64
-dotnet/aspnet:10.0 linux/arm64
-dotnet/sdk:10.0 linux/arm64
+# arm64 架构（自动生成 + 架构后缀）
+python:3.13-slim [arm64]
+dotnet/aspnet:6.0 [arm64]
+dotnet/sdk:6.0 [arm64]
+dotnet/aspnet:10.0 [arm64]
+dotnet/sdk:10.0 [arm64]
 
-# 带命名空间的镜像（自动去掉/）
+# 带命名空间的镜像（自动生成，去掉/）
 dotnet/aspnet:6.0
 dotnet/sdk:6.0

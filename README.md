@@ -52,27 +52,43 @@ ALIYUN_NAME_SPACE,ALIYUN_REGISTRY_USER，ALIYUN_REGISTRY_PASSWORD，ALIYUN_REGIS
 
 **文件格式：**
 ```
-origin_name [platform]
+origin_name [new_name] [platform]
 ```
 
 | 字段 | 说明 |
 |------|------|
-| `origin_name` | 原始镜像名称。可以是简单名称（如 `nginx`），也可以带命名空间（如 `dotnet/aspnet`） |
-| `platform` | 可选。镜像架构平台，如 `linux/arm64`、`linux/amd64`。如果省略，默认为 x86 架构 |
+| `origin_name` | 原始镜像名称。支持简单名称（如 `nginx`）、带命名空间（如 `dotnet/aspnet`）、绝对地址（如 `docker.io/library/node` 或 `mcr.microsoft.com/dotnet/sdk:9.0`） |
+| `new_name` | 可选。自定义新镜像名字（带版本号）。如果省略，则自动取原始镜像的最后一段作为名字 |
+| `platform` | 可选。镜像架构平台，**使用中括号包裹**，如 `[arm64]`、`[amd64]`。如果省略，默认为 x86 架构 |
 
 **命名规则：**
-- 自动去掉 `/` 符号，例如 `dotnet/aspnet` → `dotnetaspnet`
-- x86 架构（`linux/amd64` 或无平台）：不加后缀
-- 其他架构：添加架构后缀，例如 `linux/arm64` → `-arm64`
+- 自定义名字：使用第二个字段作为新名字，**不添加架构后缀**
+- 自动生成：取原始镜像的最后一段，去掉 `/` 符号
+  - `dotnet/aspnet:6.0` → `aspnet:6.0`
+  - `docker.io/library/node:20-alpine` → `node:20-alpine`
+  - `mcr.microsoft.com/dotnet/sdk:9.0` → `sdk:9.0`
+- 架构识别：**只有用 `[]` 包裹的才是架构**
+- x86 架构（无 platform 或 `[amd64]`）：不加后缀
+- 其他架构：自动生成的名字添加 `-xxx` 后缀，例如 `[arm64]` → `-arm64`
 
 **配置示例：**
 ```
-# x86 架构（默认）
-nginx                        # -> nginx
-dotnet/aspnet:6.0            # -> dotnetaspnet:6.0
+# 简单名字，自动生成（x86）
+nginx                              # -> nginx
+dotnet/aspnet:6.0                  # -> aspnet:6.0
 
-# arm64 架构
-python:3.13-slim linux/arm64 # -> python:3.13-slim-arm64
+# 绝对地址，自动生成（x86）
+docker.io/library/node:20-alpine   # -> node:20-alpine
+mcr.microsoft.com/dotnet/sdk:9.0   # -> sdk:9.0
+
+# 自定义名字（x86）
+node:20-alpine my-node:20          # -> my-node:20
+
+# 自动生成 + 架构
+python:3.13-slim [arm64]         # -> python:3.13-slim-arm64
+
+# 自定义名字 + 架构（自定义名字不加架构后缀）
+node:20-alpine my-node:20 [arm64]  # -> my-node:20
 ```
 
 **说明：**
@@ -88,11 +104,12 @@ python:3.13-slim linux/arm64 # -> python:3.13-slim-arm64
 每个镜像处理时会输出完整信息：
 ```
 ==============================================================================
-[1] 处理镜像：python:3.13-slim linux/arm64
+[1] 处理镜像：python:3.13-slim [arm64]
 ==============================================================================
 原始镜像：python:3.13-slim
 架构：arm64
 标签：3.13-slim
+名字来源：自动生成
 完整地址：registry.cn-hangzhou.aliyuncs.com/my-namespace/python:3.13-slim-arm64
 ```
 
@@ -111,13 +128,18 @@ shrimp-images 即 ALIYUN_NAME_SPACE(阿里云命名空间)<br>
 alpine 即 阿里云中显示的镜像名<br>
 
 ### 多架构
-在 `images.txt` 中通过第二个字段指定 `platform` 参数，会自动在镜像名后添加架构后缀：
+
+在 `images.txt` 中通过指定 `platform` 参数（使用中括号包裹）来拉取不同架构的镜像：
+
 ```
 # x86 架构（默认，无后缀）
-python:3.13-slim
+python:3.13-slim                      # -> python:3.13-slim
 
-# arm64 架构（添加-arm64 后缀）
-python:3.13-slim linux/arm64   # -> python:3.13-slim-arm64
+# arm64 架构（自动生成名字添加 -arm64 后缀）
+python:3.13-slim [arm64]              # -> python:3.13-slim-arm64
+
+# 自定义名字 + 架构（自定义名字不添加架构后缀）
+node:20-alpine my-node:20 [arm64]     # -> my-node:20
 ```
 ![](doc/多架构.png)
 

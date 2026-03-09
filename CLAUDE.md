@@ -22,16 +22,24 @@ Docker Images Pusher - A GitHub Actions workflow that mirrors Docker images from
 ### Scripts (`scripts/sync-images.sh`)
 
 Shell script that handles the image synchronization logic:
-- Parses `images.txt` format: `origin_name [platform]`
-- Applies naming rules (removes `/`, adds architecture suffix)
+- Parses `images.txt` format: `origin_name [new_name] [platform]`
+- Format detection:
+  - 1 field: `origin_name` → auto-generate name
+  - 2 fields: if second field contains `[...]`, it's platform; otherwise it's new_name
+  - 3 fields: `origin_name new_name platform`
+- Naming rules:
+  - Custom name: uses second field as new_name (no architecture suffix added)
+  - Auto-generate: takes last segment of origin image, removes `/`
+  - Architecture suffix `[xxx]` only added to auto-generated names
 - Pulls, tags, pushes images
 - Outputs full image path and version for each image:
   ```
-  [1] 处理镜像：python:3.13-slim linux/arm64
+  [1] 处理镜像：python:3.13-slim linux/[arm64]
   原始镜像：python:3.13-slim
   架构：arm64
   标签：3.13-slim
-  完整地址：registry.cn-hangzhou.aliyuncs.com/my-namespace/python:3.13-slim-arm64
+  名字来源：自动生成
+  完整地址：registry.cn-hangzhou.aliyuncs.com/my-namespace/python:3.13-slim[arm64]
   ```
 - Error handling: skips failed images and continues with next one
 - Cleans up disk space after each image
@@ -61,23 +69,34 @@ Key features:
 
 ### Images Configuration (`images.txt`)
 
-Format: `origin_name [platform]`
+Format: `origin_name [new_name] [platform]`
 
 | Fields | Description |
 |--------|-------------|
-| `origin_name` | Source image name. Can be simple name (`nginx`) or with namespace (`dotnet/aspnet`) |
-| `platform` | Optional. Platform architecture (e.g., `linux/arm64`, `linux/amd64`). Defaults to x86 if omitted |
+| `origin_name` | Source image name. Supports simple names (`nginx`), namespaced names (`dotnet/aspnet`), or absolute addresses (`docker.io/library/node`, `mcr.microsoft.com/dotnet/sdk:9.0`) |
+| `new_name` | Optional. Custom new image name with tag. If omitted, auto-generates from the last segment of origin_image |
+| `platform` | Optional. Platform architecture **with brackets**, e.g., `[arm64]`, `[amd64]`. Defaults to x86 if omitted |
 
 **Naming Rules:**
-- `/` is automatically removed: `dotnet/aspnet` → `dotnetaspnet`
-- x86 architecture (default or `linux/amd64`): no suffix
-- Other architectures: add suffix, e.g., `linux/arm64` → `-arm64`
+- Custom name: uses second field as new_name (**no architecture suffix added**)
+- Auto-generate: takes last segment, removes `/`
+  - `dotnet/aspnet:6.0` → `aspnet:6.0`
+  - `docker.io/library/node:20-alpine` → `node:20-alpine`
+  - `mcr.microsoft.com/dotnet/sdk:9.0` → `sdk:9.0`
+- Architecture: **only fields containing `[...]` are recognized as platform**
+- x86 architecture (default or `[amd64]`): no suffix
+- Other architectures: adds `-xxx` suffix to auto-generated names only
+  - `[arm64]` → `-arm64`
 
 Examples:
 ```
-nginx                              # -> nginx (x86)
-dotnet/aspnet:6.0                  # -> dotnetaspnet:6.0 (x86)
-python:3.13-slim linux/arm64       # -> python:3.13-slim-arm64 (arm64)
+nginx                                   # -> nginx (auto, x86)
+dotnet/aspnet:6.0                       # -> aspnet:6.0 (auto, x86)
+docker.io/library/node:20-alpine        # -> node:20-alpine (auto, x86)
+mcr.microsoft.com/dotnet/sdk:9.0        # -> sdk:9.0 (auto, x86)
+node:20-alpine my-node:20               # -> my-node:20 (custom, x86)
+python:3.13-slim linux/[arm64]          # -> python:3.13-slim[arm64] (auto, arm64)
+node:20-alpine my-node:20 linux/[arm64] # -> my-node:20 (custom, no suffix)
 ```
 
 ## Development Notes
