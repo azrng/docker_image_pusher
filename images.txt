@@ -5,10 +5,9 @@ node:20-alpine
 python:3.13-slim
 
 
-dotnet/aspnet:6.0
+#dotnet/aspnet:6.0
 
-
-dotnet/sdk:6.0
+#dotnet/sdk:6.0
 
 
 #支持私库
@@ -20,4 +19,4 @@ dotnet/sdk:6.0
 
 
 
-# crpi-tcpctshsgj8mzcj3.cn-shanghai.personal.cr.aliyuncs.com/azrng/nginx:[镜像版本号]
+# registry.cn-hangzhou.aliyuncs.com/zrng/nginx:[镜像版本号]
