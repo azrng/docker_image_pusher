@@ -14,7 +14,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'images.txt'
+      - 'images.md'
       - '.github/workflows/docker.yaml'
       - 'scripts/sync-images.sh'
 

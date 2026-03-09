@@ -12,7 +12,7 @@
 ```
 .
 ├── .github/workflows/docker.yaml    # GitHub Actions 工作流
-├── images.txt                       # 镜像列表配置
+├── images.md                        # 镜像列表配置
 ├── scripts/
 │   └── sync-images.sh              # 镜像同步脚本
 └── README.md                        # 使用文档
@@ -58,7 +58,7 @@ ALIYUN_NAME_SPACE,ALIYUN_REGISTRY_USER，ALIYUN_REGISTRY_PASSWORD，ALIYUN_REGIS
 
 ### 添加镜像
 
-打开 `images.txt` 文件，添加你想要的镜像。
+打开 `images.md` 文件，添加你想要的镜像。
 
 **文件格式：**
 ```
@@ -182,7 +182,7 @@ alpine 即 阿里云中显示的镜像名<br>
 
 ### 多架构
 
-在 `images.txt` 中通过指定 `platform` 参数（使用中括号包裹）来拉取不同架构的镜像：
+在 `images.md` 中通过指定 `platform` 参数（使用中括号包裹）来拉取不同架构的镜像：
 
 ```
 # x86 架构（默认，无后缀）
@@ -199,11 +199,11 @@ node:20-alpine my-node:20 [arm64]     # -> my-node:20
 ### 工作流触发方式
 
 **自动触发：**
-- 修改 `images.txt` 文件并推送到 `main` 分支
+- 修改 `images.md` 文件并推送到 `main` 分支
 - 修改 `.github/workflows/docker.yaml` 工作流文件
 - 修改 `scripts/sync-images.sh` 脚本文件
 
-> 💡 **提示**：修改 README.md 等其他文件不会触发同步，避免不必要的运行
+> 💡 **提示**：修改 README.md 等 markdown 文档不会触发同步，避免不必要的运行
 
 **手动触发：**
 1. 进入 GitHub 仓库的 Actions 页面

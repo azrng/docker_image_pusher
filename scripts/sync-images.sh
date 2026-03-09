@@ -7,7 +7,7 @@ ALIYUN_REGISTRY="${1}"
 ALIYUN_NAME_SPACE="${2}"
 ALIYUN_REGISTRY_USER="${3}"
 ALIYUN_REGISTRY_PASSWORD="${4}"
-IMAGES_FILE="${5:-images.txt}"
+IMAGES_FILE="${5:-images.md}"
 
 # 智能同步开关：true=启用智能检查（跳过已存在的镜像），false=全量同步（所有镜像都重新拉取）
 SMART_SYNC="${SMART_SYNC:-true}"
