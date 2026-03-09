@@ -10,7 +10,7 @@ ALIYUN_REGISTRY_PASSWORD="${4}"
 IMAGES_FILE="${5:-images.txt}"
 
 # 智能同步开关：true=启用智能检查（跳过已存在的镜像），false=全量同步（所有镜像都重新拉取）
-SMART_SYNC = "${SMART_SYNC:-true}"
+SMART_SYNC="${SMART_SYNC:-true}"
 
 echo "=============================================================================="
 echo "Docker 镜像同步开始"
@@ -169,6 +169,7 @@ while IFS= read -r line || [ -n "$line" ]; do
         else
             echo "未指定版本号（latest），每次拉取最新镜像..."
         fi
+    fi
 
     # 拉取镜像
     if [ -z "$platform" ]; then
