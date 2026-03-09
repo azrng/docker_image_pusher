@@ -5,7 +5,18 @@
 - 支持最大 40GB 的大型镜像<br>
 - 使用阿里云的官方线路，速度快<br>
 
-原始作者：**[技术爬爬虾](https://github.com/tech-shrimp/me)**<br>
+原作者：**[技术爬爬虾](https://github.com/tech-shrimp/me)**<br>
+
+## 项目结构
+
+```
+.
+├── .github/workflows/docker.yaml    # GitHub Actions 工作流
+├── images.txt                       # 镜像列表配置
+├── scripts/
+│   └── sync-images.sh              # 镜像同步脚本
+└── README.md                        # 使用文档
+```
 
 ## 使用方式
 

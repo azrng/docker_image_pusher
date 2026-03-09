@@ -12,10 +12,28 @@ Docker Images Pusher - A GitHub Actions workflow that mirrors Docker images from
 .
 ├── .github/workflows/docker.yaml    # Main GitHub Actions workflow
 ├── images.txt                       # List of Docker images to mirror
+├── scripts/
+│   └── sync-images.sh               # Image sync script
 └── README.md                        # Usage documentation (Chinese)
 ```
 
 ## Key Components
+
+### Scripts (`scripts/sync-images.sh`)
+
+### Scripts (`scripts/sync-images.sh`)
+
+Shell script that handles the image synchronization logic:
+- Parses `images.txt` format: `origin_name [platform]`
+- Applies naming rules (removes `/`, adds architecture suffix)
+- Pulls, tags, pushes images
+- Outputs full image path and version for each image
+- Cleans up disk space after each image
+
+Usage:
+```bash
+./scripts/sync-images.sh $ALIYUN_REGISTRY $ALIYUN_NAME_SPACE $ALIYUN_REGISTRY_USER $ALIYUN_REGISTRY_PASSWORD
+```
 
 ### GitHub Actions Workflow (`.github/workflows/docker.yaml`)
 
