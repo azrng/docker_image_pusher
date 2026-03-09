@@ -9,11 +9,19 @@ ALIYUN_REGISTRY_USER="${3}"
 ALIYUN_REGISTRY_PASSWORD="${4}"
 IMAGES_FILE="${5:-images.txt}"
 
+# 智能同步开关：true=启用智能检查（跳过已存在的镜像），false=全量同步（所有镜像都重新拉取）
+SMART_SYNC = "${SMART_SYNC:-true}"
+
 echo "=============================================================================="
 echo "Docker 镜像同步开始"
 echo "=============================================================================="
 echo "阿里云仓库：$ALIYUN_REGISTRY"
 echo "命名空间：$ALIYUN_NAME_SPACE"
+if [ "$SMART_SYNC" = "true" ]; then
+    echo "同步模式：智能同步（跳过已存在的镜像）"
+else
+    echo "同步模式：全量同步（所有镜像都重新拉取）"
+fi
 echo "=============================================================================="
 
 # 登录阿里云
@@ -145,7 +153,8 @@ while IFS= read -r line || [ -n "$line" ]; do
     fi
 
     # 只有指定了版本号的镜像才检查是否存在（latest 标签需要每次拉取最新）
-    if [ "$has_tag" = true ]; then
+    # 且智能同步开关开启时才进行检查
+    if [ "$has_tag" = true ] && [ "$SMART_SYNC" = "true" ]; then
         echo "检查镜像是否已存在..."
         # 使用 docker manifest inspect 只检查元数据，不拉取镜像层，更快更省流量
         if docker manifest inspect $full_image >/dev/null 2>&1; then
@@ -155,7 +164,11 @@ while IFS= read -r line || [ -n "$line" ]; do
         fi
         echo "镜像不存在，开始拉取..."
     else
-        echo "未指定版本号（latest），每次拉取最新镜像..."
+        if [ "$SMART_SYNC" = "false" ]; then
+            echo "智能同步已关闭，直接拉取镜像..."
+        else
+            echo "未指定版本号（latest），每次拉取最新镜像..."
+        fi
 
     # 拉取镜像
     if [ -z "$platform" ]; then

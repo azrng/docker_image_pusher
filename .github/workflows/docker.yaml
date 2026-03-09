@@ -2,6 +2,15 @@ name: Docker
 
 on:
   workflow_dispatch:
+    inputs:
+      smart_sync:
+        description: '启用智能同步（跳过已存在的镜像）'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
   push:
     branches: [ main ]
     paths:
@@ -15,6 +24,7 @@ env:
   ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
   ALIYUN_REGISTRY_USER: "${{ secrets.ALIYUN_REGISTRY_USER }}"
   ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
+  SMART_SYNC: "${{ github.event.inputs.smart_sync || 'true' }}"
 
 jobs:
 
