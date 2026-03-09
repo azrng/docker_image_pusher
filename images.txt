@@ -54,14 +54,18 @@ amir20/dozzle
 node:22-slim
 node:20-alpine
 python:3.13-slim
-
-# arm64 架构（自动生成 + 架构后缀）
 python:3.13-slim [arm64]
-dotnet/aspnet:6.0 [arm64]
-dotnet/sdk:6.0 [arm64]
-dotnet/aspnet:10.0 [arm64]
-dotnet/sdk:10.0 [arm64]
 
-# 带命名空间的镜像（自动生成，去掉/）
-dotnet/aspnet:6.0
-dotnet/sdk:6.0
+# dotnet
+
+## x86
+mcr.microsoft.com/dotnet/aspnet:6.0 dotnetaspnet:6.0
+mcr.microsoft.com/dotnet/aspnet:10.0 dotnetaspnet:10.0
+mcr.microsoft.com/dotnet/sdk:6.0 dotnetsdk:6.0
+mcr.microsoft.com/dotnet/sdk:10.0 dotnetsdk:10.0
+
+## arm64
+mcr.microsoft.com/dotnet/aspnet:6.0 dotnetaspnet:6.0 [arm64]
+mcr.microsoft.com/dotnet/aspnet:10.0 dotnetaspnet:10.0 [arm64]
+mcr.microsoft.com/dotnet/sdk:6.0 dotnetsdk:6.0 [arm64]
+mcr.microsoft.com/dotnet/sdk:10.0 dotnetsdk:10.0 [arm64]

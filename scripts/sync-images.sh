@@ -19,10 +19,36 @@ echo "==========================================================================
 # 登录阿里云
 docker login -u "$ALIYUN_REGISTRY_USER" -p "$ALIYUN_REGISTRY_PASSWORD" "$ALIYUN_REGISTRY"
 
+# 重试函数
+retry_command() {
+    local max_retries=3
+    local retry_count=0
+    local delay=5
+    local cmd="$1"
+    local description="$2"
+
+    while [ $retry_count -lt $max_retries ]; do
+        if eval "$cmd"; then
+            return 0
+        fi
+        retry_count=$((retry_count + 1))
+        if [ $retry_count -lt $max_retries ]; then
+            echo "[重试 $retry_count/$max_retries] $description 失败，${delay}秒后重试..."
+            sleep $delay
+        fi
+    done
+    echo "[失败] $description 在 $max_retries 次重试后仍然失败"
+    return 1
+}
+
 # 统计信息
 total=0
 success=0
 failed=0
+
+# 失败镜像列表文件
+FAILED_IMAGES_FILE="failed-images.txt"
+> "$FAILED_IMAGES_FILE"  # 清空失败列表
 
 while IFS= read -r line || [ -n "$line" ]; do
     # 忽略空行与注释
@@ -121,18 +147,10 @@ while IFS= read -r line || [ -n "$line" ]; do
     # 只有指定了版本号的镜像才检查是否存在（latest 标签需要每次拉取最新）
     if [ "$has_tag" = true ]; then
         echo "检查镜像是否已存在..."
-        if [ -z "$platform" ]; then
-            check_cmd="docker pull $full_image"
-        else
-            arch_for_check=$(echo "$platform" | tr -d '[]')
-            check_cmd="docker pull --platform linux/$arch_for_check $full_image"
-        fi
-
-        if $check_cmd 2>/dev/null; then
+        # 使用 docker manifest inspect 只检查元数据，不拉取镜像层，更快更省流量
+        if docker manifest inspect $full_image >/dev/null 2>&1; then
             echo "[跳过] 镜像已存在：$full_image"
             success=$((success + 1))
-            # 清理检查时拉取的镜像
-            docker rmi $full_image 2>/dev/null || true
             continue
         fi
         echo "镜像不存在，开始拉取..."
@@ -150,26 +168,29 @@ while IFS= read -r line || [ -n "$line" ]; do
 
     echo "执行：$pull_cmd"
 
-    # 执行拉取，如果失败则跳过此镜像
-    if ! $pull_cmd; then
+    # 执行拉取（带重试）
+    if ! retry_command "$pull_cmd" "拉取镜像 $origin_image"; then
         echo "[失败] 拉取镜像失败：$origin_image，跳过此镜像"
         failed=$((failed + 1))
+        echo "$origin_image -> $full_image (拉取失败)" >> "$FAILED_IMAGES_FILE"
         continue
     fi
 
-    # 标记镜像
+    # 标记镜像（带重试）
     echo "docker tag $origin_image $full_image"
-    if ! docker tag $origin_image $full_image; then
+    if ! retry_command "docker tag $origin_image $full_image" "标记镜像"; then
         echo "[失败] 标记镜像失败：$origin_image，跳过此镜像"
         failed=$((failed + 1))
+        echo "$origin_image -> $full_image (标记失败)" >> "$FAILED_IMAGES_FILE"
         continue
     fi
 
-    # 推送镜像
+    # 推送镜像（带重试）
     echo "docker push $full_image"
-    if ! docker push $full_image; then
+    if ! retry_command "docker push $full_image" "推送镜像 $full_image"; then
         echo "[失败] 推送镜像失败：$full_image，跳过此镜像"
         failed=$((failed + 1))
+        echo "$origin_image -> $full_image (推送失败)" >> "$FAILED_IMAGES_FILE"
         continue
     fi
 
@@ -188,6 +209,18 @@ echo "==========================================================================
 echo "镜像同步完成"
 echo "总数：$total | 成功：$success | 失败：$failed"
 echo "=============================================================================="
+
+# 输出失败镜像列表
+if [ $failed -gt 0 ]; then
+    echo ""
+    echo "=============================================================================="
+    echo "失败镜像列表："
+    echo "=============================================================================="
+    cat "$FAILED_IMAGES_FILE"
+    echo "=============================================================================="
+    echo "失败镜像已保存到：$FAILED_IMAGES_FILE"
+    echo "=============================================================================="
+fi
 
 # 始终返回成功，让工作流继续
 exit 0

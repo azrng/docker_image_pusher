@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
+    paths:
+      - 'images.txt'
+      - '.github/workflows/docker.yaml'
+      - 'scripts/sync-images.sh'
 
 
 env:
@@ -59,3 +63,31 @@ jobs:
       run: |
         chmod +x ./scripts/sync-images.sh
         ./scripts/sync-images.sh "$ALIYUN_REGISTRY" "$ALIYUN_NAME_SPACE" "$ALIYUN_REGISTRY_USER" "$ALIYUN_REGISTRY_PASSWORD"
+
+    - name: Generate Summary
+      if: always()
+      run: |
+        echo "## 📊 Docker 镜像同步报告" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 执行信息" >> $GITHUB_STEP_SUMMARY
+        echo "- **仓库**: ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **分支**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **触发方式**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **执行时间**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        # 输出统计信息（从脚本输出中提取）
+        if [ -f failed-images.txt ] && [ -s failed-images.txt ]; then
+          failed_count=$(wc -l < failed-images.txt)
+          echo "### ⚠️ 失败镜像列表" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat failed-images.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "### 💡 使用提示" >> $GITHUB_STEP_SUMMARY
+        echo "如需拉取镜像，使用以下命令：" >> $GITHUB_STEP_SUMMARY
+        echo '```bash' >> $GITHUB_STEP_SUMMARY
+        echo "docker pull $ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/[镜像名]:[版本号]" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
