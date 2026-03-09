@@ -21,14 +21,21 @@ Docker Images Pusher - A GitHub Actions workflow that mirrors Docker images from
 
 ### Scripts (`scripts/sync-images.sh`)
 
-### Scripts (`scripts/sync-images.sh`)
-
 Shell script that handles the image synchronization logic:
 - Parses `images.txt` format: `origin_name [platform]`
 - Applies naming rules (removes `/`, adds architecture suffix)
 - Pulls, tags, pushes images
-- Outputs full image path and version for each image
+- Outputs full image path and version for each image:
+  ```
+  [1] 处理镜像：python:3.13-slim linux/arm64
+  原始镜像：python:3.13-slim
+  架构：arm64
+  标签：3.13-slim
+  完整地址：registry.cn-hangzhou.aliyuncs.com/my-namespace/python:3.13-slim-arm64
+  ```
+- Error handling: skips failed images and continues with next one
 - Cleans up disk space after each image
+- Always exits with 0 to not fail the workflow
 
 Usage:
 ```bash

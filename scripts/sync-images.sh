@@ -3,8 +3,6 @@
 # Docker 镜像同步脚本
 # 将国外镜像转存到阿里云私有仓库
 
-set -e
-
 ALIYUN_REGISTRY="${1}"
 ALIYUN_NAME_SPACE="${2}"
 ALIYUN_REGISTRY_USER="${3}"
@@ -24,6 +22,7 @@ docker login -u "$ALIYUN_REGISTRY_USER" -p "$ALIYUN_REGISTRY_PASSWORD" "$ALIYUN_
 # 统计信息
 total=0
 success=0
+failed=0
 
 while IFS= read -r line || [ -n "$line" ]; do
     # 忽略空行与注释
@@ -66,7 +65,8 @@ while IFS= read -r line || [ -n "$line" ]; do
         new_name="$base_name"
         arch_display="x86_64"
     else
-        arch_suffix=$(echo "$platform" | sed 's/linux\///' | tr '/' '')
+        # 提取架构后缀，例如 linux/arm64 -> arm64
+        arch_suffix=$(echo "$platform" | sed 's/linux\///' | tr -d '/')
         new_name="${base_name}-${arch_suffix}"
         arch_display="$arch_suffix"
     fi
@@ -87,17 +87,31 @@ while IFS= read -r line || [ -n "$line" ]; do
     fi
 
     echo "执行：$pull_cmd"
-    $pull_cmd
+
+    # 执行拉取，如果失败则跳过此镜像
+    if ! $pull_cmd; then
+        echo "[失败] 拉取镜像失败：$origin_image，跳过此镜像"
+        failed=$((failed + 1))
+        continue
+    fi
 
     # 标记镜像
     echo "docker tag $origin_image $full_image"
-    docker tag $origin_image $full_image
+    if ! docker tag $origin_image $full_image; then
+        echo "[失败] 标记镜像失败：$origin_image，跳过此镜像"
+        failed=$((failed + 1))
+        continue
+    fi
 
     # 推送镜像
     echo "docker push $full_image"
-    docker push $full_image
+    if ! docker push $full_image; then
+        echo "[失败] 推送镜像失败：$full_image，跳过此镜像"
+        failed=$((failed + 1))
+        continue
+    fi
 
-    echo "[$OK] 推送成功：$full_image"
+    echo "[成功] 推送成功：$full_image"
     success=$((success + 1))
 
     # 清理磁盘空间
@@ -110,9 +124,8 @@ done < "$IMAGES_FILE"
 echo ""
 echo "=============================================================================="
 echo "镜像同步完成"
-echo "总数：$total | 成功：$success"
+echo "总数：$total | 成功：$success | 失败：$failed"
 echo "=============================================================================="
 
-if [ "$success" -ne "$total" ]; then
-    exit 1
-fi
+# 始终返回成功，让工作流继续
+exit 0
