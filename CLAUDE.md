@@ -11,7 +11,7 @@ Docker Images Pusher - A GitHub Actions workflow that mirrors Docker images from
 ```
 .
 ├── .github/workflows/docker.yaml    # Main GitHub Actions workflow
-├── images.txt                       # List of Docker images to mirror
+├── images.md                       # List of Docker images to mirror
 ├── scripts/
 │   └── sync-images.sh               # Image sync script
 └── README.md                        # Usage documentation (Chinese)
@@ -22,15 +22,16 @@ Docker Images Pusher - A GitHub Actions workflow that mirrors Docker images from
 ### Scripts (`scripts/sync-images.sh`)
 
 Shell script that handles the image synchronization logic:
-- Parses `images.txt` format: `origin_name [new_name] [platform]`
+- Parses `images.md` format: `origin_name [new_name] [platform]`
 - Format detection:
   - 1 field: `origin_name` → auto-generate name
   - 2 fields: if second field contains `[...]`, it's platform; otherwise it's new_name
   - 3 fields: `origin_name new_name platform`
 - Naming rules:
-  - Custom name: uses second field as new_name (no architecture suffix added)
+  - Custom name: uses second field as new_name
   - Auto-generate: takes last segment of origin image, removes `/`
-  - Architecture suffix `[xxx]` only added to auto-generated names
+  - Architecture suffix `[xxx]` only added to non-x86 architectures (arm64, etc.)
+  - This prevents different architecture images from overwriting each other
 - Pulls, tags, pushes images
 - Outputs full image path and version for each image:
   ```
@@ -64,10 +65,10 @@ Required repository secrets:
 
 Key features:
 - Disk space optimization using `easimon/maximize-build-space@master`
-- Supports multi-architecture images via `platform` field in images.txt
+- Supports multi-architecture images via `platform` field in images.md
 - Pulls images, retags for Alibaba Cloud, pushes, then cleans up disk space
 
-### Images Configuration (`images.txt`)
+### Images Configuration (`images.md`)
 
 Format: `origin_name [new_name] [platform]`
 
@@ -78,14 +79,16 @@ Format: `origin_name [new_name] [platform]`
 | `platform` | Optional. Platform architecture **with brackets**, e.g., `[arm64]`, `[amd64]`. Defaults to x86 if omitted |
 
 **Naming Rules:**
-- Custom name: uses second field as new_name (**no architecture suffix added**)
+- Custom name: uses second field as new_name
 - Auto-generate: takes last segment, removes `/`
   - `dotnet/aspnet:6.0` → `aspnet:6.0`
   - `docker.io/library/node:20-alpine` → `node:20-alpine`
   - `mcr.microsoft.com/dotnet/sdk:9.0` → `sdk:9.0`
 - Architecture: **only fields containing `[...]` are recognized as platform**
-- x86 architecture (default or `[amd64]`): no suffix
-- Other architectures: adds `-xxx` suffix to auto-generated names only
+- **Architecture suffix rule**:
+  - x86/amd64 architecture (default or `[amd64]`): **no suffix**
+  - Other architectures: **all images** get `-xxx` suffix added
+  - This prevents different architecture images from overwriting each other
   - `[arm64]` → `-arm64`
 
 Examples:
@@ -96,20 +99,20 @@ docker.io/library/node:20-alpine    # -> node:20-alpine (auto, x86)
 mcr.microsoft.com/dotnet/sdk:9.0    # -> sdk:9.0 (auto, x86)
 node:20-alpine my-node:20           # -> my-node:20 (custom, x86)
 python:3.13-slim [arm64]            # -> python:3.13-slim-arm64 (auto, arm64)
-node:20-alpine my-node:20 [arm64]   # -> my-node:20 (custom, no suffix)
+node:20-alpine my-node:20 [arm64]   # -> my-node:20-arm64 (custom, arm64)
 ```
 
 ## Development Notes
 
 - This is a **configuration-only project** - no application code to build/test
-- Changes to `images.txt` on `main` branch trigger automatic image synchronization
+- Changes to `images.md` on `main` branch trigger automatic image synchronization
 - To test workflow changes, push to a branch and create a PR or use manual dispatch
 - The workflow runs on `ubuntu-latest` and requires significant disk space (up to 40GB images)
 
 ## Common Operations
 
 **Add a new image to mirror:**
-Edit `images.txt`, add the image name (with optional tag/platform), commit to main
+Edit `images.md`, add the image name (with optional tag/platform), commit to main
 
 **Manually trigger sync:**
 Use GitHub Actions UI -> "Run workflow" button

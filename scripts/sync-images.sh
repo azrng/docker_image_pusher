@@ -145,8 +145,9 @@ while IFS= read -r line || [ -n "$line" ]; do
         # 从中括号中提取架构，例如 [arm64] -> arm64
         arch_suffix=$(echo "$platform" | tr -d '[]')
         if [ -n "$arch_suffix" ]; then
-            # 只有自动生成的名字才添加架构后缀
-            if [ -z "$new_name" ]; then
+            # 只有 amd64/x86_64 架构不添加后缀，其他架构都需要添加
+            # 这样可以避免不同架构的镜像互相覆盖
+            if [ "$arch_suffix" != "amd64" ] && [ "$arch_suffix" != "x86_64" ]; then
                 final_name="${final_name}-${arch_suffix}"
             fi
             arch_display="$arch_suffix"

@@ -72,14 +72,16 @@ origin_name [new_name] [platform]
 | `platform` | 可选。镜像架构平台，**使用中括号包裹**，如 `[arm64]`、`[amd64]`。如果省略，默认为 x86 架构 |
 
 **命名规则：**
-- 自定义名字：使用第二个字段作为新名字，**不添加架构后缀**
+- 自定义名字：使用第二个字段作为新名字
 - 自动生成：取原始镜像的最后一段，去掉 `/` 符号
   - `dotnet/aspnet:6.0` → `aspnet:6.0`
   - `docker.io/library/node:20-alpine` → `node:20-alpine`
   - `mcr.microsoft.com/dotnet/sdk:9.0` → `sdk:9.0`
 - 架构识别：**只有用 `[]` 包裹的才是架构**
-- x86 架构（无 platform 或 `[amd64]`）：不加后缀
-- 其他架构：自动生成的名字添加 `-xxx` 后缀，例如 `[arm64]` → `-arm64`
+- **架构后缀规则**：
+  - x86/amd64 架构（无 platform 或 `[amd64]`）：**不加后缀**
+  - 其他架构（如 `[arm64]`）：**所有镜像都添加** `-xxx` 后缀
+  - 这样可以避免不同架构的镜像互相覆盖
 
 **配置示例：**
 ```
@@ -191,8 +193,8 @@ python:3.13-slim                      # -> python:3.13-slim
 # arm64 架构（自动生成名字添加 -arm64 后缀）
 python:3.13-slim [arm64]              # -> python:3.13-slim-arm64
 
-# 自定义名字 + 架构（自定义名字不添加架构后缀）
-node:20-alpine my-node:20 [arm64]     # -> my-node:20
+# 自定义名字 + 架构（添加架构后缀，避免不同架构镜像覆盖）
+node:20-alpine my-node:20 [arm64]     # -> my-node:20-arm64
 ```
 ![](doc/多架构.png)
 
