@@ -34,12 +34,12 @@ Shell script that handles the image synchronization logic:
 - Pulls, tags, pushes images
 - Outputs full image path and version for each image:
   ```
-  [1] 处理镜像：python:3.13-slim linux/[arm64]
+  [1] 处理镜像：python:3.13-slim [arm64]
   原始镜像：python:3.13-slim
   架构：arm64
   标签：3.13-slim
   名字来源：自动生成
-  完整地址：registry.cn-hangzhou.aliyuncs.com/my-namespace/python:3.13-slim[arm64]
+  完整地址：registry.cn-hangzhou.aliyuncs.com/my-namespace/python:3.13-slim-arm64
   ```
 - Error handling: skips failed images and continues with next one
 - Cleans up disk space after each image
@@ -90,13 +90,13 @@ Format: `origin_name [new_name] [platform]`
 
 Examples:
 ```
-nginx                                   # -> nginx (auto, x86)
-dotnet/aspnet:6.0                       # -> aspnet:6.0 (auto, x86)
-docker.io/library/node:20-alpine        # -> node:20-alpine (auto, x86)
-mcr.microsoft.com/dotnet/sdk:9.0        # -> sdk:9.0 (auto, x86)
-node:20-alpine my-node:20               # -> my-node:20 (custom, x86)
-python:3.13-slim linux/[arm64]          # -> python:3.13-slim[arm64] (auto, arm64)
-node:20-alpine my-node:20 linux/[arm64] # -> my-node:20 (custom, no suffix)
+nginx                               # -> nginx (auto, x86)
+dotnet/aspnet:6.0                   # -> aspnet:6.0 (auto, x86)
+docker.io/library/node:20-alpine    # -> node:20-alpine (auto, x86)
+mcr.microsoft.com/dotnet/sdk:9.0    # -> sdk:9.0 (auto, x86)
+node:20-alpine my-node:20           # -> my-node:20 (custom, x86)
+python:3.13-slim [arm64]            # -> python:3.13-slim-arm64 (auto, arm64)
+node:20-alpine my-node:20 [arm64]   # -> my-node:20 (custom, no suffix)
 ```
 
 ## Development Notes
