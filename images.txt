@@ -2,7 +2,13 @@ nginx
 amir20/dozzle
 node:22-slim
 node:20-alpine
+python:3.13-slim
 
+
+dotnet/aspnet:6.0
+
+
+dotnet/sdk:6.0
 
 
 #支持私库
