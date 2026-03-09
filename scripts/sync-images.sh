@@ -112,6 +112,33 @@ while IFS= read -r line || [ -n "$line" ]; do
     echo "名字来源：$name_source"
     echo "完整地址：$full_image"
 
+    # 检查是否指定了版本号（通过判断 origin_image 是否包含 :）
+    has_tag=false
+    if echo "$origin_image" | grep -q ':'; then
+        has_tag=true
+    fi
+
+    # 只有指定了版本号的镜像才检查是否存在（latest 标签需要每次拉取最新）
+    if [ "$has_tag" = true ]; then
+        echo "检查镜像是否已存在..."
+        if [ -z "$platform" ]; then
+            check_cmd="docker pull $full_image"
+        else
+            arch_for_check=$(echo "$platform" | tr -d '[]')
+            check_cmd="docker pull --platform linux/$arch_for_check $full_image"
+        fi
+
+        if $check_cmd 2>/dev/null; then
+            echo "[跳过] 镜像已存在：$full_image"
+            success=$((success + 1))
+            # 清理检查时拉取的镜像
+            docker rmi $full_image 2>/dev/null || true
+            continue
+        fi
+        echo "镜像不存在，开始拉取..."
+    else
+        echo "未指定版本号（latest），每次拉取最新镜像..."
+
     # 拉取镜像
     if [ -z "$platform" ]; then
         pull_cmd="docker pull $origin_image"

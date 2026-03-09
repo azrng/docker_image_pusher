@@ -113,6 +113,31 @@ node:20-alpine my-node:20 [arm64]  # -> my-node:20
 完整地址：registry.cn-hangzhou.aliyuncs.com/my-namespace/python:3.13-slim-arm64
 ```
 
+### 智能同步策略
+
+脚本采用智能镜像检查机制，避免重复拉取：
+
+**指定版本号的镜像**（如 `nginx:1.24`、`python:3.13-slim`）
+- ✅ 先检查阿里云是否已存在
+- 存在则跳过，输出 `[跳过] 镜像已存在`
+- 不存在则正常拉取并推送
+
+**未指定版本号的镜像**（如 `nginx`，默认 latest）
+- ⏭️ 每次都拉取最新镜像，不检查是否存在
+- 确保 latest 标签始终同步到最新版本
+
+**输出示例：**
+```
+[1] 处理镜像：python:3.13-slim
+检查镜像是否已存在...
+[跳过] 镜像已存在：registry.cn-hangzhou.aliyuncs.com/my-namespace/python:3.13-slim-arm64
+
+[2] 处理镜像：nginx
+未指定版本号（latest），每次拉取最新镜像...
+```
+
+这种策略既节省了固定版本镜像的重复拉取时间，又确保了 latest 标签的时效性。
+
 ### 使用镜像
 回到阿里云，镜像仓库，点击任意镜像，可查看镜像状态。(可以改成公开，拉取镜像免登录)
 ![](doc/开始使用.png)
