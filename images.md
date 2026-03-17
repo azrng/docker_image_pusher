@@ -60,6 +60,8 @@ nginx:1.27.1
 # node
 node:22-slim
 node:20-alpine
+node:20-bullseye
+node:20-bullseye-slim
 
 # dotnet
 
