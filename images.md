@@ -55,9 +55,13 @@ amir20/dozzle
 nginx
 nginx:alpine3.20
 nginx:1.27.1
+nginx:1.18-alpine
+nginx:1.18-alpine [arm64]
 
 
 # node
+node:14.20
+node:14.20 [arm64]
 node:22-slim
 node:20-alpine
 node:20-bullseye
