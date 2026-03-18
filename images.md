@@ -50,6 +50,9 @@
 # 默认 x86 架构（自动生成）
 amir20/dozzle
 
+# alpine
+alpine:3.8
+alpine:3.8 [arm64]
 
 # nginx
 nginx
