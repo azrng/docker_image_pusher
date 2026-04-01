@@ -31,6 +31,7 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/nginx:1.18-alpine-arm64
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:14.20
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:14.20-arm64
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:22-slim
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:22-slim-arm64
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:20-alpine
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:20-bullseye
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:20-bullseye-slim

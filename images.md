@@ -66,6 +66,7 @@ nginx:1.18-alpine [arm64]
 node:14.20
 node:14.20 [arm64]
 node:22-slim
+node:22-slim [arm64]
 node:20-alpine
 node:20-bullseye
 node:20-bullseye-slim
