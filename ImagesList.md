@@ -35,6 +35,8 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:22-slim-arm64
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:20-alpine
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:20-bullseye
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:20-bullseye-slim
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:22.15-alpine3.20
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:22.15-alpine3.20-arm64
 ```
 
 ---
