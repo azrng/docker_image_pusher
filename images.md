@@ -57,9 +57,11 @@ alpine:3.8 [arm64]
 # nginx
 nginx
 nginx:alpine3.20
-nginx:1.27.1
 nginx:1.18-alpine
 nginx:1.18-alpine [arm64]
+nginx:1.26-alpine
+nginx:1.26-alpine [arm64]
+nginx:1.27.1
 
 
 # node
