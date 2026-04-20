@@ -61,6 +61,8 @@ nginx:1.18-alpine
 nginx:1.18-alpine [arm64]
 nginx:1.26-alpine
 nginx:1.26-alpine [arm64]
+nginx:1.28-alpine
+nginx:1.28-alpine [arm64]
 nginx:1.27.1
 
 

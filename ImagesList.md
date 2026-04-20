@@ -22,6 +22,8 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/nginx:1.18-alpine
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/nginx:1.18-alpine-arm64
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/nginx:1.26-alpine
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/nginx:1.26-alpine-arm64
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/nginx:1.28-alpine
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/nginx:1.28-alpine-arm64
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/nginx:1.27.1
 ```
 
