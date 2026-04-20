@@ -8,16 +8,6 @@
 
 ---
 
-## .NET ASP.NET aspnet
-
-```bash
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:8.0-alpine3.18
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:9.0-alpine3.20
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:9.0-alpine3.22-arm64v8
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:10.0-alpine3.22
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:10.0-alpine3.22-arm64v8
-```
-
 ---
 
 ## .NET SDK

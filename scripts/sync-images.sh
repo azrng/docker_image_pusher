@@ -148,7 +148,11 @@ while IFS= read -r line || [ -n "$line" ]; do
             # 只有 amd64/x86_64 架构不添加后缀，其他架构都需要添加
             # 这样可以避免不同架构的镜像互相覆盖
             if [ "$arch_suffix" != "amd64" ] && [ "$arch_suffix" != "x86_64" ]; then
-                final_name="${final_name}-${arch_suffix}"
+                # If the custom/generated name already contains the target architecture
+                # marker (for example arm64v8), do not append -arm64 again.
+                if ! echo "$final_name" | grep -qi "$arch_suffix"; then
+                    final_name="${final_name}-${arch_suffix}"
+                fi
             fi
             arch_display="$arch_suffix"
         fi

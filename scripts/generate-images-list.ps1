@@ -79,7 +79,9 @@ function Resolve-ImageEntry {
     if ($platform -match "^\[(.+)\]$") {
         $platformArch = $Matches[1]
         if ($platformArch -and $platformArch -notin @("amd64", "x86_64")) {
-            $finalName = "$finalName-$platformArch"
+            if ($finalName -notmatch [regex]::Escape($platformArch)) {
+                $finalName = "$finalName-$platformArch"
+            }
         }
     }
 

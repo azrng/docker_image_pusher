@@ -94,10 +94,16 @@ mcr.microsoft.com/dotnet/runtime:10.0-alpine3.22 dotnetruntime:10.0-alpine3.22 [
 ## aspnet
 mcr.microsoft.com/dotnet/aspnet:6.0 dotnetaspnet:6.0
 mcr.microsoft.com/dotnet/aspnet:6.0 dotnetaspnet:6.0 [arm64]
+mcr.microsoft.com/dotnet/aspnet:8.0-alpine3.18 dotnetaspnet:8.0-alpine3.18
 mcr.microsoft.com/dotnet/aspnet:8.0 dotnetaspnet:8.0
 mcr.microsoft.com/dotnet/aspnet:9.0 dotnetaspnet:9.0
+mcr.microsoft.com/dotnet/aspnet:9.0-alpine3.20 dotnetaspnet:9.0-alpine3.20
+mcr.microsoft.com/dotnet/aspnet:9.0-alpine3.22-arm64v8 dotnetaspnet:9.0-alpine3.22-arm64v8 [arm64]
+mcr.microsoft.com/dotnet/aspnet:9.0 dotnetaspnet:9.0
 mcr.microsoft.com/dotnet/aspnet:10.0 dotnetaspnet:10.0
+mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.22 dotnetaspnet:10.0-alpine3.22
 mcr.microsoft.com/dotnet/aspnet:10.0 dotnetaspnet:10.0 [arm64]
+mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.22-arm64v8 dotnetaspnet:10.0-alpine3.22-arm64v8 [arm64]
 
 
 ## sdk
