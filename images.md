@@ -79,17 +79,35 @@ node:22.15-alpine3.20 [arm64]
 
 # dotnet
 
-## x86
-mcr.microsoft.com/dotnet/aspnet:6.0 dotnetaspnet:6.0
-mcr.microsoft.com/dotnet/aspnet:10.0 dotnetaspnet:10.0
-mcr.microsoft.com/dotnet/sdk:6.0 dotnetsdk:6.0
-mcr.microsoft.com/dotnet/sdk:10.0 dotnetsdk:10.0
+## runtime
+mcr.microsoft.com/dotnet/runtime:6.0 dotnetruntime:6.0
+mcr.microsoft.com/dotnet/runtime:8.0 dotnetruntime:8.0
+mcr.microsoft.com/dotnet/runtime:8.0-alpine3.18 dotnetruntime:8.0-alpine3.18
+mcr.microsoft.com/dotnet/runtime:9.0 dotnetruntime:9.0
+mcr.microsoft.com/dotnet/runtime:9.0-alpine3.22 dotnetruntime:9.0-alpine3.22-arm64v8 [arm64]
+mcr.microsoft.com/dotnet/runtime:10.0 dotnetruntime:10.0
+mcr.microsoft.com/dotnet/runtime:10.0 dotnetruntime:10.0 [arm64]
+mcr.microsoft.com/dotnet/runtime:10.0-alpine3.22 dotnetruntime:10.0-alpine3.22
+mcr.microsoft.com/dotnet/runtime:10.0-alpine3.22 dotnetruntime:10.0-alpine3.22 [arm64]
 
-## arm64
+
+## aspnet
+mcr.microsoft.com/dotnet/aspnet:6.0 dotnetaspnet:6.0
 mcr.microsoft.com/dotnet/aspnet:6.0 dotnetaspnet:6.0 [arm64]
+mcr.microsoft.com/dotnet/aspnet:8.0 dotnetaspnet:8.0
+mcr.microsoft.com/dotnet/aspnet:9.0 dotnetaspnet:9.0
+mcr.microsoft.com/dotnet/aspnet:10.0 dotnetaspnet:10.0
 mcr.microsoft.com/dotnet/aspnet:10.0 dotnetaspnet:10.0 [arm64]
+
+
+## sdk
+mcr.microsoft.com/dotnet/sdk:6.0 dotnetsdk:6.0
 mcr.microsoft.com/dotnet/sdk:6.0 dotnetsdk:6.0 [arm64]
+mcr.microsoft.com/dotnet/sdk:8.0 dotnetsdk:8.0
+mcr.microsoft.com/dotnet/sdk:9.0 dotnetsdk:9.0
+mcr.microsoft.com/dotnet/sdk:10.0 dotnetsdk:10.0
 mcr.microsoft.com/dotnet/sdk:10.0 dotnetsdk:10.0 [arm64]
+
 
 # python
 python:3.13-slim

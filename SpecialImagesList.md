@@ -6,27 +6,12 @@
 
 ---
 
-## .NET Runtime
-
-```bash
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetruntime:6.0
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetruntime:8.0
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetruntime:8.0-alpine3.18
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetruntime:9.0
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetruntime:9.0-alpine3.22-arm64v8
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetruntime:10.0
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetruntime:10.0-alpine3.22
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetruntime:10.0-alpine3.22-arm64v8
-```
-
 ---
 
-## .NET ASP.NET 特殊补充
+## .NET ASP.NET aspnet
 
 ```bash
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:8.0
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:8.0-alpine3.18
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:9.0
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:9.0-alpine3.20
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:9.0-alpine3.22-arm64v8
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:10.0-alpine3.22
@@ -35,12 +20,10 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetaspnet:10.0-alpine3.22-
 
 ---
 
-## .NET SDK 特殊补充
+## .NET SDK
 
 ```bash
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetsdk:8.0
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetsdk:8.0-alpine3.18
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetsdk:9.0
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetsdk:9.0-alpine3.20
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetsdk:9.0-alpine3.22-arm64v8
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetsdk:10.0-alpine3.22
