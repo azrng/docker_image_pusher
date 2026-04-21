@@ -214,6 +214,7 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/prometheus:v2.37.6
 ## Smalte
 
 ```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/smalte:alpine-3.8
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/smalte:alpine-3.8-arm64
 ```
 
