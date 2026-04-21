@@ -110,7 +110,10 @@ mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.22-arm64v8 dotnetaspnet:10.0-alpine
 mcr.microsoft.com/dotnet/sdk:6.0 dotnetsdk:6.0
 mcr.microsoft.com/dotnet/sdk:6.0 dotnetsdk:6.0 [arm64]
 mcr.microsoft.com/dotnet/sdk:8.0 dotnetsdk:8.0
+mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18 dotnetsdk:8.0-alpine3.18
 mcr.microsoft.com/dotnet/sdk:9.0 dotnetsdk:9.0
+mcr.microsoft.com/dotnet/sdk:9.0-alpine3.20 dotnetsdk:9.0-alpine3.20
+mcr.microsoft.com/dotnet/sdk:9.0-alpine3.22-arm64v8 dotnetsdk:9.0-alpine3.22-arm64v8  [arm64]
 mcr.microsoft.com/dotnet/sdk:10.0 dotnetsdk:10.0
 mcr.microsoft.com/dotnet/sdk:10.0 dotnetsdk:10.0 [arm64]
 
