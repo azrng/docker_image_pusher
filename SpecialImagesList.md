@@ -75,6 +75,12 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/elasticsearch:7.16.3
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/clickhouse-server:24.8.7.41
 ```
 
+## dbckdb
+
+```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/duckdb-quack:1.5.3.1
+```
+
 ---
 
 ## Milvus
