@@ -78,7 +78,11 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/clickhouse-server:24.8.7.41
 ## dbckdb
 
 ```bash
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/duckdb-quack:1.5.3.1
+# quack
+docker push registry.cn-hangzhou.aliyuncs.com/zrng/duckdb:quack-1.5.3.1
+
+# flight gizmodata/gizmosql:v1.32.0
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/duckdb:flight-1.32.0
 ```
 
 ---
