@@ -78,6 +78,8 @@ node:20-bullseye
 node:20-bullseye-slim
 node:22.15-alpine3.20
 node:22.15-alpine3.20 [arm64]
+node:26.5-alpine3.24
+node:26.5-alpine3.24 [arm64]
 
 # dotnet
 
