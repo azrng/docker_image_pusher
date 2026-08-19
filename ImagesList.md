@@ -51,6 +51,17 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:20-bullseye
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:20-bullseye-slim
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:22.15-alpine3.20
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:22.15-alpine3.20-arm64
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:26.5-alpine3.24
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:26.5-alpine3.24-arm64
+```
+
+---
+
+## pgsql
+
+```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/pgvector:0.8.6-pg18-trixie
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/pgvector:0.8.6-pg18-trixie-arm64
 ```
 
 ---
