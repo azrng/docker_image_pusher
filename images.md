@@ -81,6 +81,10 @@ node:22.15-alpine3.20 [arm64]
 node:26.5-alpine3.24
 node:26.5-alpine3.24 [arm64]
 
+# pgsql
+pgvector/pgvector:0.8.6-pg18-trixie pgvector:0.8.6-pg18-trixie
+pgvector/pgvector:0.8.6-pg18-trixie pgvector:0.8.6-pg18-trixie [arm64]
+
 # dotnet
 
 ## runtime
