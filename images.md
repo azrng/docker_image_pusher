@@ -133,3 +133,10 @@ mcr.microsoft.com/dotnet/sdk:10.0 dotnetsdk:10.0 [arm64]
 # python
 python:3.13-slim
 python:3.13-slim [arm64]
+python:3.14-slim
+python:3.14-slim [arm64]
+
+
+# langfuse
+langfuse/langfuse:4.16 langfuse:4.16
+langfuse/langfuse:4.16 langfuse:4.16 [arm64]

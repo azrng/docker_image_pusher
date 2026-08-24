@@ -130,4 +130,15 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dotnetsdk:10.0-arm64
 ```bash
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/python:3.13-slim
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/python:3.13-slim-arm64
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/python:3.14-slim
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/python:3.14-slim-arm64
+```
+
+---
+
+## langfuse
+
+```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/langfuse:4.16
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/langfuse:4.16-arm64
 ```
