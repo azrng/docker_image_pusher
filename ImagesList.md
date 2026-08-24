@@ -141,4 +141,6 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/python:3.14-slim-arm64
 ```bash
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/langfuse:4.16
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/langfuse:4.16-arm64
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/langfuse-worker:4.16
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/langfuse-worker:4.16-arm64
 ```

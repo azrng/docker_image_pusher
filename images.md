@@ -140,3 +140,6 @@ python:3.14-slim [arm64]
 # langfuse
 langfuse/langfuse:4.16 langfuse:4.16
 langfuse/langfuse:4.16 langfuse:4.16 [arm64]
+
+langfuse/langfuse-worker:4.16 langfuse-worker:4.16
+langfuse/langfuse-worker:4.16 langfuse-worker:4.16 [arm64]
