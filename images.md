@@ -143,3 +143,7 @@ langfuse/langfuse:4.16 langfuse:4.16 [arm64]
 
 langfuse/langfuse-worker:4.16 langfuse-worker:4.16
 langfuse/langfuse-worker:4.16 langfuse-worker:4.16 [arm64]
+
+# arizephoenix/phoenix
+arizephoenix/phoenix:version-20.3 phoenix:20.3
+arizephoenix/phoenix:version-20.3 phoenix:20.3 [arm64]

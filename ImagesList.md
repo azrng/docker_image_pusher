@@ -144,3 +144,12 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/langfuse:4.16-arm64
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/langfuse-worker:4.16
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/langfuse-worker:4.16-arm64
 ```
+
+---
+
+## arizephoenix/phoenix
+
+```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/phoenix:20.3
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/phoenix:20.3-arm64
+```
