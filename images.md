@@ -85,6 +85,10 @@ node:26.5-alpine3.24 [arm64]
 pgvector/pgvector:0.8.6-pg18-trixie pgvector:0.8.6-pg18-trixie
 pgvector/pgvector:0.8.6-pg18-trixie pgvector:0.8.6-pg18-trixie [arm64]
 
+# ch
+clickhouse:25.12
+clickhouse:25.12 [arm64]
+
 # dotnet
 
 ## runtime

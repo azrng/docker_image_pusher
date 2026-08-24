@@ -66,6 +66,15 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/pgvector:0.8.6-pg18-trixie-ar
 
 ---
 
+## ch
+
+```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/clickhouse:25.12
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/clickhouse:25.12-arm64
+```
+
+---
+
 ## .NET Runtime
 
 ```bash
