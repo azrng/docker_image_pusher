@@ -48,7 +48,15 @@
 # ============================================
 
 # 默认 x86 架构（自动生成）
-amir20/dozzle
+
+# ragflaw
+infiniflow/infinity:v0.7.0
+infiniflow/infinity:v0.7.0 [arm64]
+infiniflow/ragflow:v0.26.4
+infiniflow/ragflow:v0.26.4 [arm64]
+
+# dozzle
+<!-- amir20/dozzle -->
 
 # alpine
 alpine:3.8

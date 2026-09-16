@@ -4,10 +4,21 @@ Image prefix: `registry.cn-hangzhou.aliyuncs.com/zrng`
 
 ---
 
-## Dozzle
+## ragflaw
 
 ```bash
-docker pull registry.cn-hangzhou.aliyuncs.com/zrng/dozzle
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/infinity:v0.7.0
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/infinity:v0.7.0-arm64
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/ragflow:v0.26.4
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/ragflow:v0.26.4-arm64
+```
+
+---
+
+## dozzle
+
+```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/amir20/dozzle
 ```
 
 ---
