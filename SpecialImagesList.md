@@ -230,6 +230,14 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/smalte:alpine-3.8-arm64
 
 ---
 
+## 人大金仓
+
+```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/kingbasees:V009R001C010B000
+```
+
+---
+
 ## 应用
 
 ```bash
