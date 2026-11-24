@@ -53,8 +53,15 @@ jobs:
         # remove-codeql: 'true'
         build-mount-path: '/var/lib/docker/'
 
-    - name: Restart docker
-      run: sudo service docker restart
+    # ubuntu-latest(26.04) 上的 Docker 29 默认启用 containerd 存储，
+    # 每个镜像层会保留压缩层+解包层两份数据，且数据落在 /var/lib/containerd
+    # （根分区，未被 maximize-build-space 扩容），拉取大镜像必然 ENOSPC。
+    # 切回经典 overlay2 存储驱动后数据落入已扩容的 /var/lib/docker，且单层只存一份。
+    - name: Use classic Docker storage driver (overlay2)
+      run: |
+        echo '{"features":{"containerd-snapshotter":false}}' | sudo tee /etc/docker/daemon.json
+        sudo service docker restart
+        echo "实际使用的存储驱动：$(docker info -f '{{ .Driver }}')"
 
     - name: Free up disk space complete
       run: |
