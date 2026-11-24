@@ -71,8 +71,12 @@ docker pull registry.cn-hangzhou.aliyuncs.com/zrng/node:26.5-alpine3.24-arm64
 ## pgsql
 
 ```bash
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/postgres:19.0
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/postgres:19.0-arm64
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/pgvector:0.8.6-pg18-trixie
 docker pull registry.cn-hangzhou.aliyuncs.com/zrng/pgvector:0.8.6-pg18-trixie-arm64
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/postgres:18-paradedb
+docker pull registry.cn-hangzhou.aliyuncs.com/zrng/postgres:18-paradedb-arm64
 ```
 
 ---

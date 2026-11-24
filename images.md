@@ -90,8 +90,12 @@ node:26.5-alpine3.24
 node:26.5-alpine3.24 [arm64]
 
 # pgsql
+postgres:19.0
+postgres:19.0 [arm64]
 pgvector/pgvector:0.8.6-pg18-trixie pgvector:0.8.6-pg18-trixie
 pgvector/pgvector:0.8.6-pg18-trixie pgvector:0.8.6-pg18-trixie [arm64]
+paradedb/paradedb:pg18 postgres:18-paradedb
+paradedb/paradedb:pg18 postgres:18-paradedb [arm64]
 
 # ch
 clickhouse:25.12
