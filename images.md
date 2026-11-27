@@ -74,6 +74,8 @@ nginx:1.28-alpine
 nginx:1.28-alpine [arm64]
 nginx:1.30.2-alpine
 nginx:1.30.2-alpine [arm64]
+nginx:1.31.10-alpine3.24
+nginx:1.31.10-alpine3.24 [arm64]
 
 
 # node
